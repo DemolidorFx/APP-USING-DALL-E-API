@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="socket.io/socket.io.js"></script>
+    <title>Document</title>
+    <style>
+        #body{
+            text-align: center;
+        }
+        img{
+            width:400px;
+            height:400px;
+        }
+        
+        #prompt{
+            width:340px;
+            font-size:18px;
+        }
+        #random{
+            width: 400px;
+            height:400px;
+            object-fit:cover;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id='body'>
+        <div class='div'>
+            <div id="random_img">
+                <img src="" alt="" id="random">
+            </div>
+            <br>
+            <div id='div_img'>
+                <img src="black.png" id='img' alt="">
+            </div>
+        </div>
+        <br>
+        <div>
+            <input type="text" id='prompt'>
+            <button onclick="enviar()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const images = ['1','2','3','4','5','6','7','8','9','10']
+        const random = Math.floor(Math.random() * images.length); 
+
+        image_path = `random_pics/${images[random]}.jpg`
+        const random_img = document.getElementById('random')
+        random_img.src = image_path
+        const socket = io.connect();
+        const img = document.getElementById('img')
+
+        socket.on('final_result', (url)=>{
+            img.src = url
+        })
+        function enviar(){
+            const input = document.getElementById('prompt').value
+            socket.emit('prompt', input)
+        }   
+    </script>
+</body>
+</html>
