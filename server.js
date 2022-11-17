@@ -9,7 +9,7 @@ const io = socket(server);
 
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "YOUR KEY HERE",
 });
 const openai = new OpenAIApi(configuration);
 
